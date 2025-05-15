@@ -4,6 +4,12 @@ class Data:
     ORDERS_URL = f'{BASE_URL}/orders'
     COURIERS_URL = f'{BASE_URL}/courier'
 
+    error_create_courier_400 = '{"code":400,"message":"Недостаточно данных для создания учетной записи"}'
+    error_create_courier_409 = '{"code":409,"message":"Этот логин уже используется. Попробуйте другой."}'
+    error_login_courier_400 = '{"code":400,"message":"Недостаточно данных для входа"}'
+    error_login_courier_404 = '{"code":404,"message":"Учетная запись не найдена"}'
+    error_504 = 'Service unavailable'
+
     ORDERS_DATA = [
         {
             "firstName": "Иван",

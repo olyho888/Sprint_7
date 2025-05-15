@@ -14,6 +14,15 @@ class OrderMethods:
             track = response.json()['track']
         return track, response
 
+    @allure.step('Создание заказа с проверкой успешности')
+    def create_order_successful(self, params):
+        response = requests.post(url=f'{Data.ORDERS_URL}', json=params)
+        if response.status_code == 201:
+            track = response.json()['track']
+            return track
+        else:
+            raise AssertionError('Ошибка при создании заказа')
+
     @allure.step('Принятие заказа')
     def accept_order(self, params):
         response = requests.put(url=f'{Data.ORDERS_URL}/accept/{params['id']}?courierId={params['courierId']}')
@@ -31,6 +40,15 @@ class OrderMethods:
         if response.status_code == 200:
             order_id = response.json()['order']['id']
         return order_id, response
+
+    @allure.step('Получение id заказа по его номеру с проверкой успешности')
+    def get_order_id_successful(self, track):
+        response = requests.get(url=f'{Data.ORDERS_URL}/track?t={track}')
+        if response.status_code == 200:
+            order_id = response.json()['order']['id']
+            return order_id
+        else:
+            raise AssertionError('Ошибка при получении id заказа')
 
     @allure.step('Получение списка заказов')
     def get_orders(self, params=None):

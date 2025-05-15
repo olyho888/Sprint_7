@@ -12,17 +12,17 @@ class TestCreateOrder:
         order_data = Data.ORDERS_DATA[0]
         order_data["color"] = color
         _, response = order_methods.create_order(order_data)
-        assert response.status_code == 201
+        assert (response.status_code == 201) and ('{"track":' in response.text)
 
     @allure.title('Проверка, что возможно создать заказ без передачи цвета самоката')
     def test_create_order_without_color(self):
         order_methods = OrderMethods()
         _, response = order_methods.create_order(Data.ORDERS_DATA[1])
-        assert response.status_code == 201
+        assert (response.status_code == 201) and ('{"track":' in response.text)
 
     @allure.title('Проверка, что возвращается track при успешном создании заказа')
     @pytest.mark.parametrize("order_data", Data.ORDERS_DATA)
     def test_create_order_check_track_successful_(self, order_data):
         order_methods = OrderMethods()
         track, response = order_methods.create_order(order_data)
-        assert ('{"track":' in response.text) and (track is not None)
+        assert (response.status_code == 201) and ('{"track":' in response.text)
